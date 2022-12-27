@@ -10,26 +10,34 @@ NC='\033[0m' # No Color
 function gitPull {
 
 cd $1
-statusFull=$(git pull)
-echo -e "${PURPLE}GET ALL COMMITS FROM: ${NC}" 
-echo $1
+statusFolder=$(cd $1 2>&1) 
+if [[ $statusFolder == *"No such file"* ]] 
+then
+   statusFull="${RED}No such folder.         ${NC}"
+else
 
 
-if [[ $statusFull == *"files changed"* ]] || [[ $statusFull == *"file changed"* ]] || [[ $statusFull == *"insertion"* ]] || [[ $statusFull == *"insertions"* ]]|| [[ $statusFull == *"deletion"* ]] || [[ $statusFull == *"deletions"* ]];
-then
-   statusFull="${LIGHTGREEN}Pulled.                 ${NC}"
-elif [[ $statusFull == *"Updating"* ]];
-then
-   statusFull="${YELLOW}Unstashed objects exist.${NC}"
-elif [[ $statusFull == *"conflict"* ]];
-then
-   statusFull="${YELLOW}Merge conflict.         ${NC}"
-elif [[ $statusFull == "" ]];
-then
-   statusFull="${RED}Unknown error.          ${NC}"
-elif [[ $statusFull == *"Already up to date."* ]];
-then
-   statusFull="${GREEN}Already up to date.     ${NC}"
+   statusFull=$(git pull)
+   echo -e "${PURPLE}GET ALL COMMITS FROM: ${NC}" 
+   echo $1
+
+
+   if [[ $statusFull == *"files changed"* ]] || [[ $statusFull == *"file changed"* ]] || [[ $statusFull == *"insertion"* ]] || [[ $statusFull == *"insertions"* ]]|| [[ $statusFull == *"deletion"* ]] || [[ $statusFull == *"deletions"* ]];
+   then
+      statusFull="${LIGHTGREEN}Pulled.                 ${NC}"
+   elif [[ $statusFull == *"Updating"* ]];
+   then
+      statusFull="${YELLOW}Unstashed objects exist.${NC}"
+   elif [[ $statusFull == *"conflict"* ]];
+   then
+      statusFull="${YELLOW}Merge conflict.         ${NC}"
+   elif [[ $statusFull == "" ]];
+   then
+      statusFull="${RED}Unknown error.          ${NC}"
+   elif [[ $statusFull == *"Already up to date."* ]];
+   then
+      statusFull="${GREEN}Already up to date.     ${NC}"
+   fi
 fi
 
 
@@ -49,19 +57,18 @@ function FindGitRepos
   echo "find all git repos"
   folders=$(find -name '.git' -type d)
   folders=${folders//'/.git'/$''}
-  folders=${folders//'./'/$'C:/Users/sasha/Desktop/'}
+  folders=${folders//'./'/"${1}/"}
   echo -e "${YELLOW}${folders}${NC}"
 }
 
 
 echo "Start script"
-
-$cd ~/Desktop 
+echo "${1}"
 
 outputStatus="" 
 
 if [[ ! -s repos.txt ]]; then
-   FindGitRepos
+   FindGitRepos "${1}"
    echo -e "${folders}" >> repos.txt
 fi
 
