@@ -54,7 +54,7 @@ echo ""
 
 function FindGitRepos
 {
-  echo "find all git repos"
+  echo "finding all git repos"
   folders=$(find -name '.git' -type d)
   folders=${folders//'/.git'/$''}
   folders=${folders//'./'/"${1}/"}
@@ -63,12 +63,12 @@ function FindGitRepos
 
 
 echo "Start script"
-echo "${1}"
+currentPath=$(realpath .)
 
 outputStatus="" 
 
 if [[ ! -s repos.txt ]]; then
-   FindGitRepos "${1}"
+   FindGitRepos "${currentPath}"
    echo -e "${folders}" >> repos.txt
 fi
 
@@ -77,7 +77,6 @@ filename='repos.txt'
 n=1
 
 while read line; do
-# reading each line
 gitPull $val1 ${line}
 n=$((n+1))
 
