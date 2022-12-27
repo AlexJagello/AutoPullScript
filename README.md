@@ -10,3 +10,5 @@
 <div> 2) In BatScriptLauncher.txt change value of variable "pathToScript" to the path to the folder with the script. </div>
 <div> 3) Move this file to windows autoload folder</div>
 <div> Now the script will be executed automatically after each launch of the computer</div>
+<div>After first launch will appear repos.txt file with pathes to your git repositories.</div> 
+<div>If necessary, you can remove some paths from this file, after which the repository will not pulled along this path</div>
