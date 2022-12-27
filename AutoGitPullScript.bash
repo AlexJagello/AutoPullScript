@@ -46,7 +46,6 @@ fi
 echo -e "$statusFull"
 echo "_______________________________________________________________"
 echo "_______________________________________________________________"
-echo "_______________________________________________________________"
 echo ""
 echo ""
 }
@@ -54,7 +53,7 @@ echo ""
 
 function FindGitRepos
 {
-  echo "finding all git repos"
+  echo "Looking for all git repositories..."
   folders=$(find -name '.git' -type d)
   folders=${folders//'/.git'/$''}
   folders=${folders//'./'/"${1}/"}
@@ -62,7 +61,7 @@ function FindGitRepos
 }
 
 
-echo "Start script"
+echo "Script start"
 currentPath=$(realpath .)
 
 outputStatus="" 
@@ -93,5 +92,5 @@ echo "+------------------------------+------------------------------------------
 echo -e "${outputStatus::-2}"
 echo "+------------------------------+------------------------------------------------------------------------------------"
 
-echo "End script. Press ENTER to exit"
+echo "Script end. Press ENTER to exit"
 read varname
